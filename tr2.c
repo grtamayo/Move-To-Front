@@ -1,5 +1,5 @@
 /*
-	Filename:     tr1.c
+	Filename:     tr2.c
 	Description:  A transformation method for binary source (e.g., arithmetic) coding.
 	Written by:   Gerald R. Tamayo, 2009/2010
 */
@@ -22,7 +22,7 @@ void decompress( void );
 
 void usage( void )
 {
-	fprintf(stderr, "\n Usage: tr1 c|d infile outfile\n");
+	fprintf(stderr, "\n Usage: tr2 c|d infile outfile\n");
 	copyright();
 	exit(0);
 }
@@ -92,7 +92,7 @@ void compress( unsigned char w[] )
 		n = 0;
 		while ( n < nread ) {
 			c = w[n++ & WMASK];
-			for ( i = 7; i >= 0; --i ){
+			for ( i = 0; i < 8; i++ ){
 				b = (c >> i) & 1;
 				if ( b == prev ) {
 					c |= (1 << i);
@@ -112,7 +112,7 @@ void decompress( void )
 	register int b, c, i, prev = 0;
 	
 	while ( (c=gfgetc()) != EOF ){
-		for ( i = 7; i >= 0; --i ){
+		for ( i = 0; i < 8; i++ ){
 			b = (c >> i) & 1;
 			if ( b ) {
 				if ( prev ) c |= (1 << i);
